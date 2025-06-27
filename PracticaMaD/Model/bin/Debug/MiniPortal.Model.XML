@@ -1,0 +1,244 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MiniPortal.Model</name>
+    </assembly>
+    <members>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserProfile.GetHashCode">
+            <summary>
+            A hash code for this instance, suitable for use in hashing algorithms and data structures 
+            like a hash table. It uses the Josh Bloch implementation from "Effective Java"
+            Primary key of entity is not included in the hash calculation to avoid errors
+            with Entity Framework creation of key values.
+            </summary>
+            <returns>
+            Returns a hash code for this instance.
+            </returns>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserProfile.Equals(System.Object)">
+            <summary>
+            Compare this object against another instance using a value approach (field-by-field) 
+            </summary>
+            <remarks>See http://www.loganfranken.com/blog/687/overriding-equals-in-c-part-1/ for detailed info </remarks>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserProfile.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"></see> that represents the 
+            current <see cref="T:System.Object"></see>.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"></see> that represents the current 
+            <see cref="T:System.Object"></see>.
+            </returns>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserProfileDao.IUserProfileDao.FindByLoginName(System.String)">
+            <summary>
+            Finds a UserProfile by loginName
+            </summary>
+            <param name="loginName">loginName</param>
+            <returns>The UserProfile</returns>
+            <exception cref="T:Es.Udc.DotNet.ModelUtil.Exceptions.InstanceNotFoundException"/>
+        </member>
+        <member name="T:Es.Udc.DotNet.MiniPortal.Model.UserProfileDao.UserProfileDaoEntityFramework">
+            <summary>
+            Specific Operations for UserProfile
+            </summary>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserProfileDao.UserProfileDaoEntityFramework.#ctor">
+            <summary>
+            Public Constructor
+            </summary>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserProfileDao.UserProfileDaoEntityFramework.FindByLoginName(System.String)">
+            <summary>
+            Finds a UserProfile by his loginName
+            </summary>
+            <param name="loginName"></param>
+            <returns></returns>
+            <exception cref="T:Es.Udc.DotNet.ModelUtil.Exceptions.InstanceNotFoundException"></exception>
+        </member>
+        <member name="T:Es.Udc.DotNet.MiniPortal.Model.UserService.Exceptions.IncorrectPasswordException">
+            <summary>
+            Public <c>ModelException</c> which captures the error 
+            with the passwords of the users.
+            </summary>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserService.Exceptions.IncorrectPasswordException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the 
+            <see cref="T:Es.Udc.DotNet.MiniPortal.Model.UserService.Exceptions.IncorrectPasswordException"/> class.
+            </summary>
+            <param name="loginName"><c>loginName</c> that causes the error.</param>
+        </member>
+        <member name="P:Es.Udc.DotNet.MiniPortal.Model.UserService.Exceptions.IncorrectPasswordException.LoginName">
+            <summary>
+            Stores the User login name of the exception
+            </summary>
+            <value>The name of the login.</value>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserService.IUserService.ChangePassword(System.Int64,System.String,System.String)">
+            <summary>
+            Changes the password.
+            </summary>
+            <param name="userProfileId"> The user profile id. </param>
+            <param name="oldClearPassword"> The old clear password. </param>
+            <param name="newClearPassword"> The new clear password. </param>
+            <exception cref="T:Es.Udc.DotNet.MiniPortal.Model.UserService.Exceptions.IncorrectPasswordException"/>
+            <exception cref="T:Es.Udc.DotNet.ModelUtil.Exceptions.InstanceNotFoundException"/>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserService.IUserService.FindUserProfileDetails(System.Int64)">
+            <summary>
+            Finds the user profile details.
+            </summary>
+            <param name="userProfileId"> The user profile id. </param>
+            <returns> The user profile details </returns>
+            <exception cref="T:Es.Udc.DotNet.ModelUtil.Exceptions.InstanceNotFoundException"/>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserService.IUserService.Login(System.String,System.String,System.Boolean)">
+            <summary>
+            Logins the specified login name.
+            </summary>
+            <param name="loginName"> Name of the login. </param>
+            <param name="password"> The password. </param>
+            <param name="passwordIsEncrypted"> if set to <c> true </c> [password is encrypted]. </param>
+            <returns> LoginResult </returns>
+            <exception cref="T:Es.Udc.DotNet.ModelUtil.Exceptions.InstanceNotFoundException"/>
+            <exception cref="T:Es.Udc.DotNet.MiniPortal.Model.UserService.Exceptions.IncorrectPasswordException"/>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserService.IUserService.RegisterUser(System.String,System.String,Es.Udc.DotNet.MiniPortal.Model.UserService.UserProfileDetails)">
+            <summary>
+            Registers a new user.
+            </summary>
+            <param name="loginName"> Name of the login. </param>
+            <param name="clearPassword"> The clear password. </param>
+            <param name="userProfileDetails"> The user profile details. </param>
+            <exception cref="T:Es.Udc.DotNet.ModelUtil.Exceptions.DuplicateInstanceException"/>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserService.IUserService.UpdateUserProfileDetails(System.Int64,Es.Udc.DotNet.MiniPortal.Model.UserService.UserProfileDetails)">
+            <summary>
+            Updates the user profile details.
+            </summary>
+            <param name="userProfileId"> The user profile id. </param>
+            <param name="userProfileDetails"> The user profile details. </param>
+            <exception cref="T:Es.Udc.DotNet.ModelUtil.Exceptions.InstanceNotFoundException"/>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserService.IUserService.UserExists(System.String)">
+            <summary>
+            Checks if the specified loginName corresponds to a valid user.
+            </summary>
+            <param name="loginName"> User loginName. </param>
+            <returns> Boolean to indicate if the loginName exists </returns>
+        </member>
+        <member name="T:Es.Udc.DotNet.MiniPortal.Model.UserService.LoginResult">
+            <summary>
+            A Custom VO which keeps the results for a login action.
+            </summary>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserService.LoginResult.#ctor(System.Int64,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Es.Udc.DotNet.MiniPortal.Model.UserService.LoginResult"/> class.
+            </summary>
+            <param name="userProfileId">The user profile id.</param>
+            <param name="firstName">Users's first name.</param>
+            <param name="encryptedPassword">The encrypted password.</param>
+            <param name="language">The language.</param>
+            <param name="country">The country.</param>
+        </member>
+        <member name="P:Es.Udc.DotNet.MiniPortal.Model.UserService.LoginResult.Country">
+            <summary>
+            Gets the country code.
+            </summary>
+            <value>The country code.</value>
+        </member>
+        <member name="P:Es.Udc.DotNet.MiniPortal.Model.UserService.LoginResult.EncryptedPassword">
+            <summary>
+            Gets the encrypted password.
+            </summary>
+            <value>The <c>encryptedPassword.</c></value>
+        </member>
+        <member name="P:Es.Udc.DotNet.MiniPortal.Model.UserService.LoginResult.FirstName">
+            <summary>
+            Gets the first name.
+            </summary>
+            <value>The <c>firstName</c></value>
+        </member>
+        <member name="P:Es.Udc.DotNet.MiniPortal.Model.UserService.LoginResult.Language">
+            <summary>
+            Gets the language code.
+            </summary>
+            <value>The language code.</value>
+        </member>
+        <member name="P:Es.Udc.DotNet.MiniPortal.Model.UserService.LoginResult.UserProfileId">
+            <summary>
+            Gets the user profile id.
+            </summary>
+            <value>The user profile id.</value>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserService.LoginResult.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"></see> that represents the
+            current <see cref="T:System.Object"></see>.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"></see> that represents the current
+            <see cref="T:System.Object"></see>.
+            </returns>
+        </member>
+        <member name="T:Es.Udc.DotNet.MiniPortal.Model.UserService.UserProfileDetails">
+            <summary>
+            VO Class which contains the user details
+            </summary>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserService.UserProfileDetails.#ctor(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Es.Udc.DotNet.MiniPortal.Model.UserService.UserProfileDetails"/>
+            class.
+            </summary>
+            <param name="firstName">The user's first name.</param>
+            <param name="lastName">The user's last name.</param>
+            <param name="email">The user's email.</param>
+            <param name="language">The language.</param>
+            <param name="country">The country.</param>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserService.UserProfileDetails.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"></see> that represents the 
+            current <see cref="T:System.Object"></see>.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"></see> that represents the current 
+            <see cref="T:System.Object"></see>.
+            </returns>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserService.UserService.ChangePassword(System.Int64,System.String,System.String)">
+            <exception cref="T:Es.Udc.DotNet.MiniPortal.Model.UserService.Exceptions.IncorrectPasswordException"/>
+            <exception cref="T:Es.Udc.DotNet.ModelUtil.Exceptions.InstanceNotFoundException"/>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserService.UserService.FindUserProfileDetails(System.Int64)">
+            <exception cref="T:Es.Udc.DotNet.ModelUtil.Exceptions.InstanceNotFoundException"/>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserService.UserService.Login(System.String,System.String,System.Boolean)">
+            <exception cref="T:Es.Udc.DotNet.ModelUtil.Exceptions.InstanceNotFoundException"/>
+            <exception cref="T:Es.Udc.DotNet.MiniPortal.Model.UserService.Exceptions.IncorrectPasswordException"/>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserService.UserService.RegisterUser(System.String,System.String,Es.Udc.DotNet.MiniPortal.Model.UserService.UserProfileDetails)">
+            <exception cref="T:Es.Udc.DotNet.ModelUtil.Exceptions.DuplicateInstanceException"/>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserService.UserService.UpdateUserProfileDetails(System.Int64,Es.Udc.DotNet.MiniPortal.Model.UserService.UserProfileDetails)">
+            <exception cref="T:Es.Udc.DotNet.ModelUtil.Exceptions.InstanceNotFoundException"/>
+        </member>
+        <member name="T:Es.Udc.DotNet.MiniPortal.Model.UserService.Util.PasswordEncrypter">
+            <summary>
+            Static Class with cryptografic utilities
+            </summary>
+        </member>
+        <member name="M:Es.Udc.DotNet.MiniPortal.Model.UserService.Util.PasswordEncrypter.Crypt(System.String)">
+            <summary>
+            Method to encrypt with a SHA 256 Algorithm
+            </summary>
+            <param name="password">String to encrypt</param>
+            <returns>Returns a String with the <paramref name="password"/> encrypted
+            </returns>                       
+        </member>
+    </members>
+</doc>

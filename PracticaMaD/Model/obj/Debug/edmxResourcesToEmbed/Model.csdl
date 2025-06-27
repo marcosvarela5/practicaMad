@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Es.Udc.DotNet.PracticaMaD.Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="categoryId" />
+    </Key>
+    <Property Name="categoryId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="categoryName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="GroupTables" Relationship="Self.FK_CategoryGroup" FromRole="Category" ToRole="GroupTable" />
+    <NavigationProperty Name="EventTables" Relationship="Self.FK_EventCategory" FromRole="Category" ToRole="EventTable" />
+  </EntityType>
+  <EntityType Name="CommentTable">
+    <Key>
+      <PropertyRef Name="commId" />
+    </Key>
+    <Property Name="commId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="eventId" Type="Int64" Nullable="false" />
+    <Property Name="userId" Type="Int64" Nullable="false" />
+    <Property Name="userName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="body" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="commDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="EventTable" Relationship="Self.FK_EventComment" FromRole="CommentTable" ToRole="EventTable" />
+    <NavigationProperty Name="UserProfile" Relationship="Self.FK_UserComment" FromRole="CommentTable" ToRole="UserProfile" />
+  </EntityType>
+  <EntityType Name="EventTable">
+    <Key>
+      <PropertyRef Name="eventId" />
+    </Key>
+    <Property Name="eventId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="eventName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="eventDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="categoryId" Type="Int64" Nullable="false" />
+    <Property Name="reseña" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="hasComments" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_EventCategory" FromRole="EventTable" ToRole="Category" />
+    <NavigationProperty Name="CommentTables" Relationship="Self.FK_EventComment" FromRole="EventTable" ToRole="CommentTable" />
+    <NavigationProperty Name="Recommendations" Relationship="Self.FK_EventRecommendation" FromRole="EventTable" ToRole="Recommendation" />
+  </EntityType>
+  <EntityType Name="GroupTable">
+    <Key>
+      <PropertyRef Name="groupId" />
+    </Key>
+    <Property Name="groupId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="groupName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="body" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="categoryId" Type="Int64" Nullable="false" />
+    <Property Name="userId" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_CategoryGroup" FromRole="GroupTable" ToRole="Category" />
+    <NavigationProperty Name="Memberships" Relationship="Self.FK_GroupMembership" FromRole="GroupTable" ToRole="Membership" />
+    <NavigationProperty Name="Recommendations" Relationship="Self.FK_GroupRecommendation" FromRole="GroupTable" ToRole="Recommendation" />
+    <NavigationProperty Name="UserProfile" Relationship="Self.FK_UserGroup" FromRole="GroupTable" ToRole="UserProfile" />
+  </EntityType>
+  <EntityType Name="Membership">
+    <Key>
+      <PropertyRef Name="userId" />
+      <PropertyRef Name="groupId" />
+    </Key>
+    <Property Name="userId" Type="Int64" Nullable="false" />
+    <Property Name="groupId" Type="Int64" Nullable="false" />
+    <Property Name="joinDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="GroupTable" Relationship="Self.FK_GroupMembership" FromRole="Membership" ToRole="GroupTable" />
+    <NavigationProperty Name="UserProfile" Relationship="Self.FK_UserMembership" FromRole="Membership" ToRole="UserProfile" />
+  </EntityType>
+  <EntityType Name="Recommendation">
+    <Key>
+      <PropertyRef Name="recomId" />
+    </Key>
+    <Property Name="recomId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="justification" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="recommendationDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="eventId" Type="Int64" Nullable="false" />
+    <Property Name="groupId" Type="Int64" Nullable="false" />
+    <Property Name="userId" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="EventTable" Relationship="Self.FK_EventRecommendation" FromRole="Recommendation" ToRole="EventTable" />
+    <NavigationProperty Name="GroupTable" Relationship="Self.FK_GroupRecommendation" FromRole="Recommendation" ToRole="GroupTable" />
+    <NavigationProperty Name="UserProfile" Relationship="Self.FK_UserRecommendation" FromRole="Recommendation" ToRole="UserProfile" />
+  </EntityType>
+  <EntityType Name="UserProfile">
+    <Key>
+      <PropertyRef Name="usrId" />
+    </Key>
+    <Property Name="usrId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="loginName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="enPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="firstName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="lastName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="language" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="country" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="CommentTables" Relationship="Self.FK_UserComment" FromRole="UserProfile" ToRole="CommentTable" />
+    <NavigationProperty Name="GroupTables" Relationship="Self.FK_UserGroup" FromRole="UserProfile" ToRole="GroupTable" />
+    <NavigationProperty Name="Memberships" Relationship="Self.FK_UserMembership" FromRole="UserProfile" ToRole="Membership" />
+    <NavigationProperty Name="Recommendations" Relationship="Self.FK_UserRecommendation" FromRole="UserProfile" ToRole="Recommendation" />
+  </EntityType>
+  <Association Name="FK_CategoryGroup">
+    <End Role="Category" Type="Self.Category" Multiplicity="1" />
+    <End Role="GroupTable" Type="Self.GroupTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="categoryId" />
+      </Principal>
+      <Dependent Role="GroupTable">
+        <PropertyRef Name="categoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventCategory">
+    <End Role="Category" Type="Self.Category" Multiplicity="1" />
+    <End Role="EventTable" Type="Self.EventTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="categoryId" />
+      </Principal>
+      <Dependent Role="EventTable">
+        <PropertyRef Name="categoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventComment">
+    <End Role="EventTable" Type="Self.EventTable" Multiplicity="1" />
+    <End Role="CommentTable" Type="Self.CommentTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventTable">
+        <PropertyRef Name="eventId" />
+      </Principal>
+      <Dependent Role="CommentTable">
+        <PropertyRef Name="eventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserComment">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+    <End Role="CommentTable" Type="Self.CommentTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="usrId" />
+      </Principal>
+      <Dependent Role="CommentTable">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventRecommendation">
+    <End Role="EventTable" Type="Self.EventTable" Multiplicity="1" />
+    <End Role="Recommendation" Type="Self.Recommendation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventTable">
+        <PropertyRef Name="eventId" />
+      </Principal>
+      <Dependent Role="Recommendation">
+        <PropertyRef Name="eventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GroupMembership">
+    <End Role="GroupTable" Type="Self.GroupTable" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Membership" Type="Self.Membership" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GroupTable">
+        <PropertyRef Name="groupId" />
+      </Principal>
+      <Dependent Role="Membership">
+        <PropertyRef Name="groupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GroupRecommendation">
+    <End Role="GroupTable" Type="Self.GroupTable" Multiplicity="1" />
+    <End Role="Recommendation" Type="Self.Recommendation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GroupTable">
+        <PropertyRef Name="groupId" />
+      </Principal>
+      <Dependent Role="Recommendation">
+        <PropertyRef Name="groupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserGroup">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+    <End Role="GroupTable" Type="Self.GroupTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="usrId" />
+      </Principal>
+      <Dependent Role="GroupTable">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserMembership">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Membership" Type="Self.Membership" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="usrId" />
+      </Principal>
+      <Dependent Role="Membership">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRecommendation">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+    <End Role="Recommendation" Type="Self.Recommendation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="usrId" />
+      </Principal>
+      <Dependent Role="Recommendation">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="practicaMaDEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="CommentTables" EntityType="Self.CommentTable" />
+    <EntitySet Name="EventTables" EntityType="Self.EventTable" />
+    <EntitySet Name="GroupTables" EntityType="Self.GroupTable" />
+    <EntitySet Name="Memberships" EntityType="Self.Membership" />
+    <EntitySet Name="Recommendations" EntityType="Self.Recommendation" />
+    <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
+    <AssociationSet Name="FK_CategoryGroup" Association="Self.FK_CategoryGroup">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="GroupTable" EntitySet="GroupTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventCategory" Association="Self.FK_EventCategory">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="EventTable" EntitySet="EventTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventComment" Association="Self.FK_EventComment">
+      <End Role="EventTable" EntitySet="EventTables" />
+      <End Role="CommentTable" EntitySet="CommentTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserComment" Association="Self.FK_UserComment">
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+      <End Role="CommentTable" EntitySet="CommentTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventRecommendation" Association="Self.FK_EventRecommendation">
+      <End Role="EventTable" EntitySet="EventTables" />
+      <End Role="Recommendation" EntitySet="Recommendations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GroupMembership" Association="Self.FK_GroupMembership">
+      <End Role="GroupTable" EntitySet="GroupTables" />
+      <End Role="Membership" EntitySet="Memberships" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GroupRecommendation" Association="Self.FK_GroupRecommendation">
+      <End Role="GroupTable" EntitySet="GroupTables" />
+      <End Role="Recommendation" EntitySet="Recommendations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserGroup" Association="Self.FK_UserGroup">
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+      <End Role="GroupTable" EntitySet="GroupTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserMembership" Association="Self.FK_UserMembership">
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+      <End Role="Membership" EntitySet="Memberships" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRecommendation" Association="Self.FK_UserRecommendation">
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+      <End Role="Recommendation" EntitySet="Recommendations" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
